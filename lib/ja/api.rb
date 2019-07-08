@@ -19,7 +19,7 @@ module Ja
       if url
         uri = URI.parse(url)
         if uri.user || uri.password
-          @client = @client.basic_auth(uri.user, uri.password)
+          @client = @client.basic_auth(user: uri.user, pass: uri.password)
           uri.user = nil
           uri.password = nil
           @url = uri.to_s

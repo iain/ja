@@ -50,6 +50,12 @@ RSpec.describe Ja do
       expect(request.with(headers: { "X-Request-Id" => "my-request-id" })).to have_been_made
     end
 
+    it "recognizes basic auth" do
+      request = stub_request(:any, "https://example.com/widgets")
+      Ja.api(url: "https://username:password@example.com").get("widgets")
+      expect(request.with(headers: { "Authorization" => "Basic dXNlcm5hbWU6cGFzc3dvcmQ=" })).to have_been_made
+    end
+
   end
 
   describe "logging" do
