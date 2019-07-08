@@ -20,6 +20,14 @@ module Ja
     @logger = logger
   end
 
+  def self.enable_semantic_logging=(bool)
+    @enable_semantic_logging = bool
+  end
+
+  def self.enable_semantic_logging?
+    !!@enable_semantic_logging
+  end
+
   def self.api(*args, &block)
     API.new(*args, &block)
   end

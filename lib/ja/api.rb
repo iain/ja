@@ -16,6 +16,7 @@ module Ja
       @logger = logger
       @log_line = log_line
       @url = url
+      @semantic_logging = Ja.enable_semantic_logging? || (defined?(SemanticLogger) && logger.is_a?(SemanticLogger::Logger))
     end
 
     attr_reader :client, :logger, :log_line, :url
@@ -69,7 +70,7 @@ module Ja
 
       message = log_line % payload
 
-      if defined?(SemanticLogger) && logger.is_a?(SemanticLogger::Logger)
+      if @semantic_logging
         logger.public_send(log_level, message: message, duration: duration, payload: payload)
       else
         logger.public_send(log_level, "(%.2fms) %s" % [ duration, message ])

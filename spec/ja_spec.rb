@@ -103,6 +103,24 @@ RSpec.describe Ja do
       )
     end
 
+    it "forcefully uses semantic logging" do
+      logger = double(:some_logger)
+      allow(logger).to receive(:info)
+      allow(Ja).to receive(:enable_semantic_logging?).and_return(true)
+      stubbed_request.to_return(status: 200)
+      Ja.api(logger: logger).get(url)
+      expect(logger).to have_received(:info).with(
+        message: "GET #{url} responded with 200 OK",
+        duration: a_kind_of(Float),
+        payload: {
+          verb:    "GET",
+          url:     url,
+          status:  200,
+          reason:  "OK",
+        }
+      )
+    end
+
   end
 
   describe "errors" do
