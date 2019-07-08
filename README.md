@@ -28,9 +28,18 @@ respoonse = my_service.get("widgets")
 Or by setting your own HTTP options:
 
 ``` ruby
-client = HTTP.basic_auth(user: "alice", pass: "secret")
-my_authenticated_service = Ja.api(client: client)
-my_authenticated_service.get("my-private-widgets")
+client = HTTP.headers("Content-Type" => "application/json")
+my_service = Ja.api(client: client)
+my_service.get("widgets")
+```
+
+### Authentication
+
+Ja will automatically recognize basic authentication in the URL, so you don't have to call `HTTP.basic_auth` manually.
+
+``` ruby
+my_authenticated_service = Ja.api(url: "https://username:secret@my-service.com")
+my_authenticated_service.get("settings")
 ```
 
 ### Raising errors
@@ -68,6 +77,8 @@ Ja.logger = Logger.new("log/http.log")
 ```
 
 To log the full request and full response, we need to do some monkey patching, so it is disabled by default. To enable it, call `Ja.enable_debug_logging!`. You may want to do this only for development/test but not on production, because it might mess with streaming responses. Full request logging will always log in `debug` log level and will always use the globally configered logger.
+
+If you have a logger that can accept hashes for some rich logging, you can enable that style by setting `Ja.enable_semantic_logging = true`
 
 ### Request ID
 
@@ -114,6 +125,13 @@ Or install it yourself as:
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+### Todo
+
+Some things that are on my mind of adding:
+
+* Add ja-style functionality via [generic features](https://github.com/httprb/http/pull/482)
+* Use native [logging and instrumation](https://github.com/httprb/http/pull/499)
 
 ## Contributing
 
