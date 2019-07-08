@@ -16,6 +16,15 @@ module Ja
       @logger = logger
       @log_line = log_line
       @url = url
+      if url
+        uri = URI.parse(url)
+        if uri.user || uri.password
+          @client = @client.basic_auth(uri.user, uri.password)
+          uri.user = nil
+          uri.password = nil
+          @url = uri.to_s
+        end
+      end
       @semantic_logging = Ja.enable_semantic_logging? || (defined?(SemanticLogger) && logger.is_a?(SemanticLogger::Logger))
     end
 
