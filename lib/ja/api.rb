@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Ja
   class API
 
-    LOG_LINE = "%{verb} %{url} responded with %{status} %{reason}"
-
     include Methods
+
+    LOG_LINE = "%{verb} %{url} responded with %{status} %{reason}"
 
     def initialize(client:   HTTP,
                    url:      nil,

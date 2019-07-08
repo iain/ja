@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Ja do
 
   let(:url) { "http://example.com/widgets" }

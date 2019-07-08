@@ -1,5 +1,16 @@
+# frozen_string_literal: true
+
 module Ja
   class Error < StandardError
+
+    # Base class for all errors
+    ResponseError = Class.new(Error)
+
+    # Base class for errors in the 4xx range
+    ClientError = Class.new(ResponseError)
+
+    # Base class for errors in the 5xx range
+    ServerError = Class.new(ResponseError)
 
     def self.to_exception(verb, uri, response)
       Error.fetch_error_class(response.status).new(verb, uri, response)
@@ -34,15 +45,6 @@ module Ja
     def status
       response.status
     end
-
-    # Base class for all errors
-    ResponseError = Class.new(Error)
-
-    # Base class for errors in the 4xx range
-    ClientError = Class.new(ResponseError)
-
-    # Base class for errors in the 5xx range
-    ServerError = Class.new(ResponseError)
 
     HTTP::Response::Status::REASONS.each do |status, name|
       parent = status >= 500 ? ServerError : ClientError
