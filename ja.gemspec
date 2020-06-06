@@ -27,5 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "nokogiri"
   spec.add_development_dependency "webmock"
 
-  spec.add_dependency "http", ">= 3"
+  spec.add_dependency "http", ">= 4"
 end
