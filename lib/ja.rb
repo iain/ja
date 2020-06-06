@@ -28,8 +28,8 @@ module Ja
     !!@enable_semantic_logging
   end
 
-  def self.api(*args, &block)
-    API.new(*args, &block)
+  def self.api(**kwargs, &block)
+    API.new(**kwargs, &block)
   end
 
   def self.default_logger
