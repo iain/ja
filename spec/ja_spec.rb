@@ -61,7 +61,7 @@ RSpec.describe Ja do
   describe "logging" do
 
     it "logs successful responses with INFO level message" do
-      logger = double(:logger, info: true)
+      logger = instance_spy(Logger, info: true)
       stubbed_request.to_return(status: 200)
       Ja.api(logger: logger).get(url)
       regex = /\A\(\d+\.\d+ms\) GET #{url} responded with 200 OK\z/
@@ -69,7 +69,7 @@ RSpec.describe Ja do
     end
 
     it "logs redirects with WARN level message" do
-      logger = double(:logger, warn: true)
+      logger = instance_spy(Logger, warn: true)
       stubbed_request.to_return(status: 300)
       Ja.api(logger: logger).get(url)
       regex = /\A\(\d+\.\d+ms\) GET #{url} responded with 300 Multiple Choices\z/
@@ -77,7 +77,7 @@ RSpec.describe Ja do
     end
 
     it "logs client errors with ERROR level message" do
-      logger = double(:logger, error: true)
+      logger = instance_spy(Logger, error: true)
       stubbed_request.to_return(status: 400)
       Ja.api(logger: logger).get(url)
       regex = /\A\(\d+\.\d+ms\) GET #{url} responded with 400 Bad Request\z/
@@ -85,32 +85,15 @@ RSpec.describe Ja do
     end
 
     it "logs server errors with ERROR level message" do
-      logger = double(:logger, error: true)
+      logger = instance_spy(Logger, error: true)
       stubbed_request.to_return(status: 500)
       Ja.api(logger: logger).get(url)
       regex = /\A\(\d+\.\d+ms\) GET #{url} responded with 500 Internal Server Error\z/
       expect(logger).to have_received(:error).with(a_string_matching(regex))
     end
 
-    it "logs for SemanticLogger" do
-      logger = SemanticLogger["RSpec"]
-      allow(logger).to receive(:info)
-      stubbed_request.to_return(status: 200)
-      Ja.api(logger: logger).get(url)
-      expect(logger).to have_received(:info).with(
-        message: "GET #{url} responded with 200 OK",
-        duration: a_kind_of(Float),
-        payload: {
-          verb:    "GET",
-          url:     url,
-          status:  200,
-          reason:  "OK",
-        }
-      )
-    end
-
-    it "forcefully uses semantic logging" do
-      logger = double(:some_logger)
+    it "can use semantic logging" do
+      logger = instance_spy(Logger)
       allow(logger).to receive(:info)
       allow(Ja).to receive(:enable_semantic_logging?).and_return(true)
       stubbed_request.to_return(status: 200)

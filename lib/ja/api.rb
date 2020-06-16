@@ -32,7 +32,7 @@ module Ja
 
     def request(verb, uri, options = {})
       full_uri = full_url(uri)
-      start_time = Time.now
+      start_time = now
       client_with_request_id = client.headers("X-Request-Id" => Thread.current[:request_id])
       response = client_with_request_id.request(verb, full_uri, options)
       log_response(response, start_time, verb, full_uri, options)
@@ -59,7 +59,7 @@ module Ja
     private
 
     def log_response(response, start_time, verb, uri, _options)
-      duration = (Time.now - start_time) * 1000.0
+      duration = ((now - start_time) * 1000.0).round(3)
 
       log_level = case response.status
                   when 100..299
@@ -84,6 +84,10 @@ module Ja
       else
         logger.public_send(log_level, "(%.2fms) %s" % [ duration, message ])
       end
+    end
+
+    def now
+      Process.clock_gettime(Process::CLOCK_MONOTONIC)
     end
 
   end

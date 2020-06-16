@@ -13,7 +13,7 @@ require "ja/debug_logger"
 module Ja
 
   def self.logger
-    @logger ||= default_logger
+    @logger ||= default_logger # rubocop:disable Naming/MemoizedInstanceVariableName
   end
 
   def self.logger=(logger)
