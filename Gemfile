@@ -11,6 +11,6 @@ gem "rspec", "~> 3.0"
 
 gem "rubocop", "~> 1.7"
 
-gem "semantic_logger"
 gem "nokogiri"
+gem "semantic_logger"
 gem "webmock"

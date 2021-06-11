@@ -102,10 +102,10 @@ RSpec.describe Ja do
         message: "GET #{url} responded with 200 OK",
         duration: a_kind_of(Float),
         payload: {
-          verb:    "GET",
-          url:     url,
-          status:  200,
-          reason:  "OK",
+          verb: "GET",
+          url: url,
+          status: 200,
+          reason: "OK",
         }
       )
     end

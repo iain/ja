@@ -14,7 +14,7 @@ module Ja
           req.body.each { |chunk| buffer << chunk }
           buffer
         }
-        lines.join("\n") + "\n\n" + body + "\n\e[0m\n"
+        "#{lines.join("\n")}\n\n#{body}\n\e[0m\n"
       }
 
       res = super
@@ -25,7 +25,7 @@ module Ja
         lines << "HTTP/#{res.instance_variable_get(:@version)} #{res.status}"
         lines += res.headers.map { |key, value| "#{key}: #{value}" }
         body = Ja.format_body(res.headers) { res.body.to_s }
-        lines.join("\n") + "\n\n" + body + "\n\e[0m\n"
+        "#{lines.join("\n")}\n\n#{body}\n\e[0m\n"
       }
 
       res
