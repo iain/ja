@@ -13,7 +13,7 @@ require "ja/debug_logger"
 module Ja
 
   def self.logger
-    @logger ||= default_logger # rubocop:disable Naming/MemoizedInstanceVariableName
+    @logger ||= default_logger
   end
 
   def self.logger=(logger)
@@ -44,7 +44,7 @@ module Ja
     end
   end
 
-  # TODO detect streaming
+  # TODO: detect streaming
   def self.format_body(headers, &body)
     mime_type = parse_mime_type(headers)
     case mime_type
@@ -75,6 +75,7 @@ module Ja
 
   def self.enable_debug_logging!
     return if HTTP::Client.ancestors.include?(DebugLogger)
+
     HTTP::Client.prepend(DebugLogger)
   end
 

@@ -102,10 +102,10 @@ RSpec.describe Ja do
         message: "GET #{url} responded with 200 OK",
         duration: a_kind_of(Float),
         payload: {
-          verb:    "GET",
-          url:     url,
-          status:  200,
-          reason:  "OK",
+          verb: "GET",
+          url: url,
+          status: 200,
+          reason: "OK",
         }
       )
     end
@@ -177,7 +177,7 @@ RSpec.describe Ja do
 
   describe "debug logging" do
 
-    it "prints the log" do
+    xit "prints the log" do
       body = { foo: "bar" }
       stubbed_request.to_return(status: 200, body: body.to_json, headers: { content_type: "application/json" })
       Ja.api.get(url)

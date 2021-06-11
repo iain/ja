@@ -20,7 +20,7 @@ module Ja
       const_get(HTTP::Response::Status::REASONS.fetch(status, "ResponseError").gsub(/\W/, ""))
     end
 
-    attr_reader :response, :verb, :uri
+    attr_reader :response, :verb, :uri, :message, :response_body, :headline
 
     def initialize(verb, uri, response)
       @response = response
@@ -28,19 +28,19 @@ module Ja
       @uri = uri
 
       @headline = "%{verb} %{url} responded with %{status}" % {
-        status:  response.status,
-        verb:    verb.to_s.upcase,
-        url:     uri.to_s,
+        status: response.status,
+        verb: verb.to_s.upcase,
+        url: uri.to_s,
       }
 
       @response_body = Ja.format_body(response.headers) { response.body.to_s }
 
       @message = @response_body ? "#{@headline}\n\n#{@response_body}" : @headline
+
+      super(@message)
     end
 
-    attr_reader :message, :response_body, :headline
-
-    alias_method :to_s, :message
+    alias to_s message
 
     def status
       response.status

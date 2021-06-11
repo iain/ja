@@ -44,7 +44,7 @@ module Ja
       if (100..399).cover?(response.status)
         response
       else
-        fail Error.to_exception(verb, full_url(uri), response)
+        raise Error.to_exception(verb, full_url(uri), response)
       end
     end
 
@@ -71,10 +71,10 @@ module Ja
                   end
 
       payload = {
-        verb:    verb.to_s.upcase,
-        url:     uri.to_s,
-        status:  response.status.to_i,
-        reason:  response.status.reason.to_s,
+        verb: verb.to_s.upcase,
+        url: uri.to_s,
+        status: response.status.to_i,
+        reason: response.status.reason.to_s,
       }
 
       message = log_line % payload

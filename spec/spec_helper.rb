@@ -5,13 +5,12 @@ require "ja"
 
 require "webmock/rspec"
 
-require "pry"
 require "nokogiri"
 require "semantic_logger"
 
 BUFFER = StringIO.new
 Ja.logger = Logger.new(BUFFER)
-Ja.logger.formatter = Proc.new { |sev, _, _, msg| "[#{sev}] #{msg}\n" }
+Ja.logger.formatter = proc { |sev, _, _, msg| "[#{sev}] #{msg}\n" }
 Ja.enable_debug_logging!
 
 module BufferHelper
