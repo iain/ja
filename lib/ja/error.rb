@@ -36,6 +36,8 @@ module Ja
       @response_body = Ja.format_body(response.headers) { response.body.to_s }
 
       @message = @response_body ? "#{@headline}\n\n#{@response_body}" : @headline
+
+      super(@message)
     end
 
     alias to_s message

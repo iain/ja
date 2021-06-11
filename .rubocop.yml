@@ -18,9 +18,11 @@ Style/FormatStringToken:
   Enabled: false
 Style/GuardClause:
   Enabled: false
+Style/Documentation:
+  Enabled: false
 
 Layout/LineLength:
-  Max: 120
+  Max: 160
 
 Metrics/BlockLength:
   Enabled: false
