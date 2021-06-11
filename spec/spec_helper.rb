@@ -5,7 +5,6 @@ require "ja"
 
 require "webmock/rspec"
 
-require "pry"
 require "nokogiri"
 require "semantic_logger"
 
